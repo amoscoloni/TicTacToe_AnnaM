@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TicTacToe</name>
+    </assembly>
+    <members>
+        <member name="T:TicTacToe.TicTacToeModel">
+            <summary>
+            The data and state of a tic tac toe game
+            </summary>
+        </member>
+        <member name="T:TicTacToe.TicTacToeModel.PlayStatus">
+            <summary>
+            Status of the game
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.PlayStatus.ready">
+            <summary>
+            Game is ready to be played
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.PlayStatus.inPlay">
+            <summary>
+            game is in play
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.PlayStatus.won">
+            <summary>
+             the game has been won
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.PlayStatus.undefined">
+            <summary>
+             not definable status
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.PlayStatus.draw">
+            <summary>
+             the game has resulted in a draw
+            </summary>
+        </member>
+        <member name="T:TicTacToe.TicTacToeModel.ErrorCodes">
+            <summary>
+            Errors relating to the changing of the data state
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.ErrorCodes.InvalidRowColumn">
+            <summary>
+            An attempt was made to access an invalid row/col
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.ErrorCodes.CellIsAlreadyAssigned">
+            <summary>
+            An attemp to 'click' on a cell that has already been taken
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.ErrorCodes.WrongPersonMakingMove">
+            <summary>
+            The person making the move is invalid
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.ErrorCodes.NoError">
+            <summary>
+            There are currently no errors
+            </summary>
+        </member>
+        <member name="F:TicTacToe.TicTacToeModel.ErrorCodes.GameStatusDoesNotAllowAMoveAtThisPoint_Check_Status">
+            <summary>
+            An attemp was made to make a 'move', but the game is not in
+            a playable state
+            </summary>
+        </member>
+        <member name="P:TicTacToe.TicTacToeModel.NextPlayer">
+            <summary>
+            Who is the next play who should move
+            </summary>
+            <value> '1' for player 1, '2' for player 2 </value>
+        </member>
+        <member name="P:TicTacToe.TicTacToeModel.GameError">
+            <summary>
+            Error Codes after a play has been made
+            <see cref="T:TicTacToe.TicTacToeModel.ErrorCodes"/>
+            </summary>
+        </member>
+        <member name="P:TicTacToe.TicTacToeModel.status">
+            <summary>
+            The current status of the game
+            <see cref="T:TicTacToe.TicTacToeModel.PlayStatus"/>
+            </summary>
+        </member>
+        <member name="M:TicTacToe.TicTacToeModel.#ctor">
+            <summary>
+            Constructor
+            </summary>
+            <example>
+            <code>
+            <![CDATA[
+            var game = new TicTacToeModel();
+            while (true) {
+               game.NewBoard();
+               while (game.status != TicTacToeModel.PlayStatus.won && 
+                      game.status != TicTacToeModel.PlayStatus.draw) {
+                   var player = game.NextPlayer;
+                   Console.WriteLine($"Player {player}, it is your turn to play");
+                   Console.WriteLine("Enter row number: ");
+                   var row = Int32.Parse(Console.ReadLine());
+                   Console.WriteLine("Enter col number: ");
+                   var col = Int32.Parse(Console.ReadLine());
+                   game.MakePlay(player, row, col);
+                   if (game.GameError != TicTacToeModel.ErrorCodes.NoError) {
+                      Console.Write("There was an error: ");
+                      Console.WriteLine(Enum.GetName(typeof(TicTacToeModel.ErrorCodes),
+                           game.GameError));
+                   }
+               }
+            
+               if (game.status == TicTacToeModel.PlayStatus.won) {
+                  Console.WriteLine($"Player {game.NextPlayer} won the game");
+               }
+               if (game.status == TicTacToeModel.PlayStatus.draw) {
+                  Console.WriteLine($"The game ended in a draw");
+               }
+               Console.WriteLine("Hit Return for Next Game");
+               Console.ReadLine();
+            }
+            ]]>
+            </code>
+            </example>
+        </member>
+        <member name="M:TicTacToe.TicTacToeModel.NewBoard">
+            <summary>
+            Resest the tic-tac-toe board, and the game state
+            </summary>
+        </member>
+        <member name="M:TicTacToe.TicTacToeModel.MakePlay(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Make a Move
+            </summary>
+            <param name="playerNum">The Player who is making the move (1 or 2)</param>
+            <param name="row">The row (zero-based) of the chosen cell</param>
+            <param name="col">The column (zero-based) fo the chosen cell</param>
+            <returns>true if a successful move, false if there was
+            an error <see cref="T:TicTacToe.TicTacToeModel.ErrorCodes"/></returns>
+        </member>
+    </members>
+</doc>
